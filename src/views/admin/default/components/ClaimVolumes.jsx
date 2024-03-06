@@ -11,7 +11,6 @@ import ClaimVolumesChart from "components/charts/ClaimVolumesChart";
 
 export default function ClaimVolumes(props) {
   const { ...rest } = props;
-
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (

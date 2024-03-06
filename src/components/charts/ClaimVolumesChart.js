@@ -4,15 +4,11 @@ import ReactApexChart from "react-apexcharts";
 
 const ClaimVolumesChart = (props) => {
   const data = props.chartData;
-  console.log("claim volume data: ", data);
   const claimVolumeMonths = Object.values(data['Month of Date'])
   const claimVolumeValues = Object.values(data['Total Claim Count'])
-  console.log(claimVolumeMonths)
-
-  // const payorMixSeriees = Object.values(data['Payer Percentage'])
   const seriesData = [
     {
-      name: "TEST",
+      name: "",
       data: claimVolumeValues,
     },
   ];
@@ -24,7 +20,7 @@ const ClaimVolumesChart = (props) => {
       type: "line",
       zoom: {
         enabled: true,
-      },
+      }
     },
     dataLabels: {
       enabled: false,
@@ -33,7 +29,7 @@ const ClaimVolumesChart = (props) => {
       curve: "straight",
     },
     title: {
-      text: "Testing",
+      text: "",
       align: "center",
     },
     grid: {
@@ -42,8 +38,9 @@ const ClaimVolumesChart = (props) => {
         opacity: 0.5,
       },
     },
+    colors: ['#5bc8ac'],
     xaxis: {
-      categories: ['Mar2023', 'Apr2023', 'May2023', 'June2023', 'July2023', 'Aug 2023', 'Sept2023', 'Oct2023', 'Nov2023', 'Dec2023'],
+      categories: claimVolumeMonths
     },
   };
 

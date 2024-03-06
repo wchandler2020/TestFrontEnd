@@ -18,6 +18,30 @@
   --font-medium: 500;
 }
 
+.css-bo31hw {
+  font-weight: var(--chakra-fontWeights-medium);
+  font-size: var(--chakra-fontSizes-sm);
+  line-height: 50%;
+  color: var(--chakra-colors-secondaryGray-600);
+}
+
+.css-bo31hw:first-child {
+  font-weight: var(--chakra-fontWeights-medium);
+  font-size: 1.3rem !important;
+  line-height: 50%;
+  color: var(--chakra-colors-secondaryGray-600);
+  text-align: center;
+  font-weight: 500 !important;
+  margin-bottom: 1.2rem;
+}
+.top-stat:first-of-type{
+  font-size: 1.3rem !important;
+}
+
+.top-stat{
+  font-size: 1rem !important;
+}
+
 .bg_modal{
   opacity: 0.92;
   height: 100%;

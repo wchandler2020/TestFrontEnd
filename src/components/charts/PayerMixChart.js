@@ -10,10 +10,18 @@ const PayerMixChart = (props) => {
         chart: {
           type: 'bar',
           height: 350,
+          zoom: {
+            enabled: true,
+          },
+        },
+        fill: {
+          colors: ['#5bc8ac']
         },
         plotOptions: {
           bar: {
             horizontal: true,
+            borderRadius: 6,
+            columnWidth: '60%',
           },
         },
         dataLabels: {

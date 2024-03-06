@@ -36,6 +36,7 @@ export default function Default(props) {
             {name}
           </StatLabel>
           <StatNumber
+          className="top-stat"
             color={textColor}
             marginBottom='5px'
             fontSize={{
@@ -52,6 +53,7 @@ export default function Default(props) {
             {name2}
           </StatLabel>
           <StatNumber
+            className="top-stat"
             color={textColor}
             marginBottom='5px'
             fontSize={{
@@ -68,6 +70,7 @@ export default function Default(props) {
             {name3}
           </StatLabel>
           <StatNumber
+            className="top-stat"
             color={textColor}
             fontSize={{
               base: "2xl",

@@ -4,10 +4,12 @@ import ReactApexChart from "react-apexcharts";
 
 const MonthlyCostChart = (props) => {
     const data =  props.chartData;
-    console.log('month cost data: ', data)
     const monthlyCostVal = Object.values(data['# FTEs'])
     const monthYearVal = Object.values(data['Month of Month-Year'])
     const monthCostToCollect = Object.values['Monthly Cost to Collect']
+    console.log('month value', monthlyCostVal)
+    console.lgo('monhth year value', monthYearVal)
+    console.log('monthCostCollection', monthCostToCollect)
     // const payorMixSeriees = Object.values(data['Payer Percentage'])
     
     
@@ -17,15 +19,23 @@ const MonthlyCostChart = (props) => {
         data: monthlyCostVal
       }],
       options: {
+        id: 'monthChart',
         chart: {
           height: 350,
           type: 'bar',
+          toolbar: {
+            show: true,
+          }
+        },
+        fill: {
+          colors: ['#5bc8ac']
         },
         plotOptions: {
           bar: {
-            borderRadius: 10,
+            borderRadius: 6,
+            columnWidth: '60%',
             dataLabels: {
-              position: 'bottom', // top, center, bottom
+              position: 'center', // top, center, bottom
             },
           }
         },
@@ -36,8 +46,11 @@ const MonthlyCostChart = (props) => {
           },
           offsetY: -20,
           style: {
-            fontSize: '12px',
-            colors: ["#304758"]
+            marginBottom: '20px',
+            paddingBottom: '10px',
+            fontSize: '10px',
+            fontWeight: 400,
+            colors: ["#f1f1f2"]
           }
         },
         

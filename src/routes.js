@@ -7,7 +7,8 @@ import {
   MdHome,
   MdLock,
   MdOutlineShoppingCart,
-  MdLogout
+  MdLogout,
+  MdOutlineGroups
 } from "react-icons/md";
 
 // Admin Imports
@@ -29,9 +30,9 @@ const routes = [
     component: MainDashboard,
   },
   {
-    name: "Data Tables",
+    name: "Meet The Team",
     layout: "/admin",
-    icon: <Icon as={MdBarChart} width='20px' height='20px' color='inherit' />,
+    icon: <Icon as={MdOutlineGroups} width='20px' height='20px' color='inherit' />,
     path: "/data-tables",
     component: DataTables,
   },

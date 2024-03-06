@@ -5,12 +5,11 @@ import { Box, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 import Card from "components/card/Card.js";
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
-import PayerMixChart from "components/charts/PayerMixChart"; 
 import MonthlyCostChart from "components/charts/MonthlyCostChart";
 
 export default function MonthlyCost(props) {
   const { ...rest } = props;
-
+  
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (

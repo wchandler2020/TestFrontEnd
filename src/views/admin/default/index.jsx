@@ -69,21 +69,15 @@ import PayerMix from "./components/PayerMix";
 import MonthlyCost from "./components/MonthlyCost";
 import ClaimVolumes from "./components/ClaimVolumes";
 
-
-
 export default function UserReports() {
-  const regexPattern = /^[a-zA-Z0-9,.-]+$/;
   const [loading, setLoading] = useState(true)
   const [tableauData, setTableauData] = useState([]);
   const [barchartData, setBarchartData] = useState([]);
-  const [xaxisData, setXaxisData] = useState([]);
-  const [yaxisData, setYaxisData] = useState([]);
+  const [comparisonData, setComparisonData] = useState(null);
   const [payerMixData, setPayerMixData] = useState(null);
   const [monthCostData, setMonthlyCostData] = useState(null);
   const [claimVolumeData, setClaimVolumeData] = useState(null);
-  
-
-
+// const url = "http://localhost:8000/api/tableau-data/";
 const url = "https://wchandler60610.pythonanywhere.com/api/tableau-data/";
 const values = [];
 
@@ -100,42 +94,52 @@ useEffect(() => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        const jsonString = JSON.stringify(data.ortho_one_data);
+        const jsonString = JSON.stringify(data.ortho_one_data)
+        const comparisoonDataStr = JSON.stringify(data.chart_data_results[0])
+        const monthCostStr = JSON.stringify(data.chart_data_results[1])
+        const payermixStr = JSON.stringify(data.chart_data_results[2])
+        const volumeStr = JSON.stringify(data.chart_data_results[3])
+        
+        const mixPayereResponseData = JSON.parse(payermixStr); 
         const retrievedData = JSON.parse(jsonString);
-        const mixPayereResponseData = JSON.parse(data['chart_data_results'][1]);  
-        const monthCostResponseeData = JSON.parse(data['chart_data_results'][2]);
-        const volumeData = JSON.parse(data['chart_data_results'][3]);
-        setPayerMixData(mixPayereResponseData)
+        const monthCostResponseeData = JSON.parse(monthCostStr);
+        const volumeData = JSON.parse(volumeStr);
+        const comparisonData = JSON.parse(comparisoonDataStr)
         setTableauData(retrievedData);
+        setPayerMixData(mixPayereResponseData)
         setMonthlyCostData(monthCostResponseeData)
+        setComparisonData(comparisonData)
         setClaimVolumeData(volumeData)
-
-        console.log('DATA: ', volumeData)
         setLoading(false)
-        // setBarchartData(responseData);
-        // setXaxisData(Object.values(responseData['Measure Names']));
-        // setYaxisData(Object.values(responseData['Measure Values']));
       } catch (e) {
         console.log(e);
       }
     })();
   }
 }, []);
-console.log('THIS IS GETTING CLOSER: ', claimVolumeData)
+
+
 
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   if(loading) return <p>Loading...</p>
+  // <Icon
+  //                       w='32px'
+  //                       h='32px'
+  //                       as={negVal ? MdArrowDownward : MdArrowUpward}
+  //                       color={negVal ? '#CB0000' : '#5C8F22'}
+  //                     />
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, "2xl": 3 }}
         gap='20px'
         mb='20px'>
           {
-            tableauData.map((tabItem, i) => (
+            tableauData.map((tabItem, i) => {
+              const negVal = Object.values(tabItem['item_1'])[1]['0']
+              return (
                 <MiniStatistics
                 keys={i}
                 startContent={
@@ -144,22 +148,19 @@ console.log('THIS IS GETTING CLOSER: ', claimVolumeData)
                     h='56px'
                     bg={boxBg}
                     icon={
-                      <Icon w='32px' h='32px' as={tabItem['item_1'].includes('-') ? MdArrowDownward : MdArrowUpward} color={tabItem['item_1'].includes('-') ? '#CB0000' : '#5C8F22'} />
+                      <Icon w='32px' h='32px' as={negVal==='Negative' ? MdArrowDownward : MdArrowUpward} color={negVal === 'Negative' ? '#f70025': '#5C8F22'} />
                     }
                   />
                 }
-                
-                // name={formatClientData('Orth One', Object.values(tabItem['item_1']).toString().replace(/[^a-zA-Z0-9,.-]/g, ''))[0]}
-                // value={`${formatClientData('Orth One', Object.values(tabItem['item_1']) .toString().replace(/[^a-zA-Z0-9,.-]/g, ''))[1]}`}
-                name={formatClientData('Orth One', tabItem['item_1'])[0]}
-                value={formatClientData('Orth One', tabItem['item_1'])[1]}
-                name2={formatClientData('Orth One',tabItem['item_2'])[0]}
-                value2={formatClientData('Orth One',tabItem['item_2'])[1]}
-                name3={formatClientData('Orth One',tabItem['item_3'])[0]}
-                value3={formatClientData('Orth One',tabItem['item_3'])[1]}
+                name={formatClientData(tabItem['item_1'])[0]}
+                value={formatClientData(tabItem['item_1'])[1]}
+                name2={formatClientData(tabItem['item_2'])[0]}
+                value2={formatClientData(tabItem['item_2'])[1]}
+                name3={formatClientData(tabItem['item_3'])[0]}
+                value3={formatClientData(tabItem['item_3'])[1]}
               />
-              
-            ))
+            )}
+            )
           }      
         {/* <MiniStatistics
           startContent={
@@ -226,20 +227,22 @@ console.log('THIS IS GETTING CLOSER: ', claimVolumeData)
       </SimpleGrid>
     
 
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
-        {/* Conditionally render MonthlyCost component */}
-        {monthCostData && <MonthlyCost chartData={monthCostData} />}
-        {/* Conditionally render PayerMix component */}
-        {payerMixData && <PayerMix chartData={payerMixData} />}
-        {/* <ArBuckets  
-          columnsData={xaxisData}
-          tableData={yaxisData}
-        /> */}
-        {/* <WeeklyRevenue /> */}
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'>
+        <ArBuckets chartData={comparisonData}/>
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
         {/* Conditionally render MonthlyCost component */}
-        {monthCostData && <ClaimVolumes chartData={claimVolumeData}/>}
+        
+        {claimVolumeData && <ClaimVolumes chartData={claimVolumeData}/>}
+        {/* Conditionally render PayerMix component */}
+        {payerMixData && <PayerMix chartData={payerMixData} />}
+        {/* <ArBuckets  
+            chartData={comparisonData}
+        /> */}
+      </SimpleGrid>
+      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
+        {/* Conditionally render MonthlyCost component */}
+        {/* {monthCostData && <MonthlyCost chartData={monthCostData} />} */}
         {/* Conditionally render PayerMix component */}
         {/* {payerMixData && <PayerMix chartData={payerMixData} />} */}
         {/* <ArBuckets  
