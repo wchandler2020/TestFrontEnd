@@ -94,7 +94,8 @@ useEffect(() => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        const jsonString = JSON.stringify(data.ortho_one_data)
+                
+        const jsonString = JSON.stringify(data.client_data)
         const comparisoonDataStr = JSON.stringify(data.chart_data_results[0])
         const monthCostStr = JSON.stringify(data.chart_data_results[1])
         const payermixStr = JSON.stringify(data.chart_data_results[2])
