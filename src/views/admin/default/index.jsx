@@ -68,6 +68,8 @@ import PayerMixChart from "components/charts/PayerMixChart";
 import PayerMix from "./components/PayerMix";
 import MonthlyCost from "./components/MonthlyCost";
 import ClaimVolumes from "./components/ClaimVolumes";
+import '../../../interceptors/axios'
+import Loading from "../loading/Loading";
 
 export default function UserReports() {
   const [loading, setLoading] = useState(true)
@@ -77,8 +79,8 @@ export default function UserReports() {
   const [payerMixData, setPayerMixData] = useState(null);
   const [monthCostData, setMonthlyCostData] = useState(null);
   const [claimVolumeData, setClaimVolumeData] = useState(null);
-// const url = "http://localhost:8000/api/tableau-data/";
-const url = "https://wchandler60610.pythonanywhere.com/api/tableau-data/";
+const url = "http://localhost:8000/api/tableau-data/";
+// const url = "https://wchandler60610.pythonanywhere.com/api/tableau-data/";
 const values = [];
 
 useEffect(() => {
@@ -124,7 +126,9 @@ useEffect(() => {
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
-  if(loading) return <p>Loading...</p>
+  if(loading) return <div style={{'height': '100vh', 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center'}}>
+    <Loading /> 
+  </div>
   // <Icon
   //                       w='32px'
   //                       h='32px'
@@ -229,7 +233,7 @@ useEffect(() => {
     
 
       <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'>
-        <ArBuckets chartData={comparisonData}/>
+        {comparisonData && <ArBuckets chartData={comparisonData}/>}
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
         {/* Conditionally render MonthlyCost component */}

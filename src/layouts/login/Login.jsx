@@ -18,7 +18,8 @@ function Login() {
   const [password, setPassword] = useState("");
 
   const submit = async (e) => {
-    const url = "https://wchandler60610.pythonanywhere.com/api/token/";
+    const url = 'http://localhost:8000/api/token/'
+    // const url = "https://wchandler60610.pythonanywhere.com/api/token/";
     try {
       e.preventDefault();
       const user = {

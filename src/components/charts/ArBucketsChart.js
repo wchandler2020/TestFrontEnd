@@ -49,15 +49,15 @@ const ArBucketsChart = (props) => {
     plotOptions: {
       bar: {
         horizontal: false,
-        borderRadius: 6,
-        columnWidth: '60%',
+        borderRadius: 8,
+        columnWidth: '40%',
       },
     },
     dataLabels: {
       enabled: false,
     },
     stroke: {
-      width: [1, 1, 4],
+      width: [0, 0, 0],
     },
     title: {
       text: '',

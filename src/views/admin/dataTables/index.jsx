@@ -38,6 +38,8 @@ import tableDataCheck from "views/admin/dataTables/variables/tableDataCheck.json
 import tableDataColumns from "views/admin/dataTables/variables/tableDataColumns.json";
 import tableDataComplex from "views/admin/dataTables/variables/tableDataComplex.json";
 import React from "react";
+import '../../../interceptors/axios'
+import Card from "components/card/Card";
 
 export default function MeetTheTeam() {
   // Chakra Color Mode
@@ -58,6 +60,7 @@ export default function MeetTheTeam() {
           </p>
         </div>
         <div class="grid gap-8 lg:gap-16 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <Card>
           <div class="text-center text-gray-500 dark:text-gray-400">
             <img
               class="mx-auto mb-4 w-36 h-36 rounded-full"
@@ -87,6 +90,8 @@ export default function MeetTheTeam() {
               </li>
             </ul>
           </div>
+          </Card>
+          <Card>
           <div class="text-center text-gray-500 dark:text-gray-400">
             <img
               class="mx-auto mb-4 w-36 h-36 rounded-full"
@@ -116,6 +121,8 @@ export default function MeetTheTeam() {
               </li>
             </ul>
           </div>
+          </Card>
+          <Card>
           <div class="text-center text-gray-500 dark:text-gray-400">
             <img
               class="mx-auto mb-4 w-36 h-36 rounded-full"
@@ -145,6 +152,8 @@ export default function MeetTheTeam() {
               </li>
             </ul>
           </div>
+          </Card>
+          <Card>
           <div class="text-center text-gray-500 dark:text-gray-400">
             <img
               class="mx-auto mb-4 w-36 h-36 rounded-full"
@@ -174,6 +183,8 @@ export default function MeetTheTeam() {
               </li>
             </ul>
           </div>
+          </Card>
+          <Card>
           <div class="text-center text-gray-500 dark:text-gray-400">
             <img
               class="mx-auto mb-4 w-36 h-36 rounded-full"
@@ -203,6 +214,8 @@ export default function MeetTheTeam() {
               </li>
             </ul>
           </div>
+          </Card>
+          <Card>
           <div class="text-center text-gray-500 dark:text-gray-400">
             <img
               class="mx-auto mb-4 w-36 h-36 rounded-full"
@@ -232,6 +245,8 @@ export default function MeetTheTeam() {
               </li>
             </ul>
           </div>
+          </Card>
+          <Card>
           <div class="text-center text-gray-500 dark:text-gray-400">
             <img
               class="mx-auto mb-4 w-36 h-36 rounded-full"
@@ -261,7 +276,9 @@ export default function MeetTheTeam() {
               </li>
             </ul>
           </div>
-          <div class="text-center text-gray-500 dark:text-gray-400">
+          </Card>
+         <Card>
+         <div class="text-center text-gray-500 dark:text-gray-400">
             <img
               class="mx-auto mb-4 w-36 h-36 rounded-full"
               src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/neil-sims.png"
@@ -290,6 +307,8 @@ export default function MeetTheTeam() {
               </li>
             </ul>
           </div>
+         </Card>
+          
         </div>
       </div>
     </Box>
