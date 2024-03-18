@@ -38,7 +38,6 @@ axios.interceptors.response.use(
         console.log("Error refreshing token:", refreshError);
       }
     }
-
     refresh = false;
     return Promise.reject(error);
   }

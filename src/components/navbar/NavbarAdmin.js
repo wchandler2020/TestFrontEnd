@@ -10,9 +10,10 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import AdminNavbarLinks from "components/navbar/NavbarLinksAdmin";
 import axios from "axios";
+import { UserContext } from "contexts/UserContext";
 
 export default function AdminNavbar(props) {
   const [scrolled, setScrolled] = useState(false);

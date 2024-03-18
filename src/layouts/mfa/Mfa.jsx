@@ -1,12 +1,10 @@
 
 
-import React, { useState, useContext} from "react";
+import React, { useState,useContext, useEffect } from "react";
 import modal_login_bg_image from "../../assets/img/jorie_ai.png";
 import logo from "../../assets/img/logo.webp";
 import axios from "axios";
 import { UserContext } from "contexts/UserContext";
-import { useHistory } from "react-router-dom";
-
 
 let myDate = new Date();
 let hours = myDate.getHours();
@@ -16,23 +14,14 @@ if (hours < 12) greet = "Morning";
 else if (hours >= 12 && hours <= 17) greet = "Good Afternoon!";
 else if (hours >= 17 && hours <= 24) greet = "Good Evening!";
 
-function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const {login} = useContext(UserContext)
-  const history = useHistory();
-
+function Mfa() {
+  const [token, setToken] = useState("");
+  const {isVerified, VerifyUser,  error, loading} = useContext(UserContext)
 
   const submit = async (e) => {
-    e.preventDefault()
-
-    if( await login(email, password)){
-        setEmail("");
-        setPassword("");
-        history.push("/");
-    }
-
-
+      e.preventDefault()
+      console.log('submit')
+      VerifyUser(token)
   };
   return (
     <div className="bg-white dark:bg-gray-900">
@@ -83,57 +72,34 @@ function Login() {
               </div>
 
               <p className="mt-3 text-gray-500 dark:text-gray-300">
-                {`${greet}`} Sign in to access your dashboard
+                {`${greet}`} Confirm your 2fa toke to access your dashboard
               </p>
             </div>
             <div className="mt-8">
               <form onSubmit={submit}>
                 <div>
                   <label
-                    htmlFor="email"
+                    htmlFor="token"
                     className="block mb-2 text-sm text-gray-600 dark:text-gray-200"
                   >
-                    Email Address
+                    Token
                   </label>
                   <input
-                    type="email"
-                    id="email"
-                    placeholder="example@example.com"
+                    type="number"
+                    id="token"
+                    placeholder="999 999"
                     className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                    name="email"
-                    onChange={(e) => setEmail(e.target.value)}
+                    name="token"
+                    onChange={(e) => setToken(e.target.value)}
                   />
-                </div>
-                <div className="mt-6">
-                  <div className="flex justify-between mb-2">
-                    <label
-                      htmlFor="password"
-                      className="text-sm text-gray-600 dark:text-gray-200"
-                    >
-                      Password
-                    </label>
-                    <a
-                      href="#"
-                      className="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline"
-                    >
-                      Forgot password?
-                    </a>
-                  </div>
-                  <input
-                    type="password"
-                    id="password"
-                    placeholder="Your Password"
-                    className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
-                    name="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                  <p>{error}</p>
                 </div>
                 <div className="mt-6">
                   <button
                     className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
-                    type="submit"
+                    type="submit" disabled={loading}
                   >
-                    Sign in
+                    Verify
                   </button>
                 </div>
               </form>
@@ -148,4 +114,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Mfa;
