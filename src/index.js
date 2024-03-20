@@ -11,6 +11,9 @@ import UserProvider from 'contexts/UserContext';
 import './App.css'
 import './interceptors/axios'
 
+
+  
+
 ReactDOM.render(
 	<ChakraProvider theme={theme}>
 		<React.StrictMode>

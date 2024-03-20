@@ -28,7 +28,7 @@ import { ThemeEditor } from "./ThemeEditor";
 import axios from "axios";
 
 const logoutFunc = async () => {
-  const logOutUrl = "https://wchandler60610.pythonanywhere.com/api/token/logout/"
+  const logOutUrl = "http://localhost:8000/api/token/logout/"
 
   try {
     const accessToken = localStorage.getItem("access_token");
@@ -52,7 +52,7 @@ const logoutFunc = async () => {
     );
 
     // Clear local storage and remove Authorization header
-    localStorage.clear();
+    localStorage.removeItem('access_token')
     delete axios.defaults.headers.common["authorization"];
 
     // Redirect to the login page
@@ -72,7 +72,8 @@ const logoutFunc = async () => {
 
 export default function HeaderLinks(props) {
   const [userData, setUserData] = useState([]);
-  const url = "https://wchandler60610.pythonanywhere.com/api/dashboard/";
+  // const url = "https://wchandler60610.pythonanywhere.com/api/dashboard/";
+  const url = "http://localhost:8000/api/dashboard/";
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");

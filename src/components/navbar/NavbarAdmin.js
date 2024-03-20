@@ -27,7 +27,8 @@ export default function AdminNavbar(props) {
     };
   });
 
-  const url = "https://wchandler60610.pythonanywhere.com/api/dashboard/";
+  // const url = "https://wchandler60610.pythonanywhere.com/api/dashboard/";
+  const url = "http://localhost:8000/api/dashboard/";
 
   useEffect(() => {
     const accessToken = localStorage.getItem("access_token");

@@ -20,7 +20,6 @@ const LoginModal = (props) => {
   // const navigate = useNavigate();
 
   const submit = async (e) => {
-    const url = "https://wchandler60610.pythonanywhere.com/api/token/";
     try {
       e.preventDefault();
       const user = {
@@ -34,7 +33,6 @@ const LoginModal = (props) => {
         withCredentials: true,
       });
       // Initialize the access & refresh token in localstorage.
-      localStorage.clear();
       localStorage.setItem("access_token", data.access);
       localStorage.setItem("refresh_token", data.refresh);
       // Set the Authorization header for subsequent requests

@@ -1,15 +1,32 @@
 import { createContext, useEffect, useState, useMemo} from "react";
 import axios from "axios";
+import "interceptors/axios"
 
 export const UserContext = createContext();
 
+export const getUniqueId = () =>{
+  if(localStorage.getItem("uniqueId")){
+    return localStorage.getItem("uniqueId")
+  }
+  const userAgent = window.navigator.userAgent;
+  const platform = window.navigator.platform;
+  const randomString = Math.random().toString(20).substring(2, 14) + Math.random().toString(20).substring(2, 14);
+
+  const deviceID = `${userAgent}-${platform}-${randomString}`;
+  localStorage.setItem("uniqueId", deviceID)
+  return deviceID
+}
+
+
+
 const UserProvider = ( {children}) =>{
-    const [isVerified, setVerified] = useState(localStorage.getItem("is_verified"))
-    const [error, setError] = useState(false)
+    const [isVerified, setVerified] = useState(false)
+    const [loginError, setLoginError] = useState(false)
     const [loading,setLoading] = useState(true)
     const [isAuth, setAuth] = useState(false)
 
     const login = async (email, password) => {
+      setLoginError(false)
       try{
         const url = 'http://localhost:8000/api/token/'
         // const url = "https://wchandler60610.pythonanywhere.com/api/token/";
@@ -20,23 +37,26 @@ const UserProvider = ( {children}) =>{
           withCredentials: true,
         }); 
         // Initialize the access & refresh token in localstorage.
-        localStorage.clear();
+        getUniqueId()
         localStorage.setItem("access_token", data.access);
         localStorage.setItem("refresh_token", data.refresh);
 
         // Set the Authorization header for subsequent requests
         axios.defaults.headers.common["Authorization"] = `Bearer ${data.access}`;
+        
         setAuth(true)
         return true
       }catch (e){
-        console.error(error);
+        console.log(e.response.data.detail)
+        setLoginError(e.response.data.detail)
+        console.error(loginError);
       }
       return false
     }
 
  
     const verifyToken = async (token) =>{
-        setError(false)
+      setLoginError(false)
         const accessToken = localStorage.getItem("access_token");
         
         if(!accessToken){
@@ -50,11 +70,10 @@ const UserProvider = ( {children}) =>{
             },
             withCredentials: true,
           });
-          localStorage.setItem("is_verified", 'true');
          return true
         }catch(e){
           
-            setError('Invalid Token')
+          setLoginError('Invalid Token')
             console.log(e)
         }
         return false
@@ -62,7 +81,32 @@ const UserProvider = ( {children}) =>{
     const VerifyUser = async (token) => {
        setVerified(!isVerified? (await verifyToken(token)): true);
     }
+    
+    const IsAlreadyVerified = async () =>{
+
+      const accessToken = localStorage.getItem("access_token");
+        
+      if(!accessToken){
+          return false
+      }
+      console.log("access_token", accessToken )
+      try{
+        const { data } = await axios.get(`http://localhost:8000/api/verified/`, {
+          headers: {
+            "Authorization": `Bearer ${accessToken}`,
+          },
+          withCredentials: true,
+        });
+       return true
+      }catch(e){
+        
+          return false
+          console.log(e)
+      }
+    }
+
     useEffect(() =>{
+
        const start = async () =>{
           console.log("state:",{
             isAuth,
@@ -71,6 +115,9 @@ const UserProvider = ( {children}) =>{
           const accessToken = localStorage.getItem("access_token");
           if(accessToken){
             setAuth(true)
+            if(!isVerified){
+              setVerified(await IsAlreadyVerified())
+            }
           }
           setLoading(false)
        }
@@ -79,7 +126,7 @@ const UserProvider = ( {children}) =>{
     return <UserContext.Provider value={{
         verifyToken,
         VerifyUser,
-        error,
+        loginError,
         isVerified,
         isAuth,
         setAuth,

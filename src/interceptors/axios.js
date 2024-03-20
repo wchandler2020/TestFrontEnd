@@ -5,6 +5,22 @@ let refresh = false;
 
 count = count + 1;
 console.log('GETTING CALLED...');
+//const url = "https://wchandler60610.pythonanywhere.com/api/token/refresh/";
+const url = "http://localhost:8000/api/token/refresh/";
+const getUniqueId = () =>{
+  if(localStorage.getItem("uniqueId")){
+    return localStorage.getItem("uniqueId")
+  }
+  const userAgent = window.navigator.userAgent;
+  const platform = window.navigator.platform;
+  const randomString = Math.random().toString(20).substring(2, 14) + Math.random().toString(20).substring(2, 14);
+
+  const deviceID = `${userAgent}-${platform}-${randomString}`;
+  localStorage.setItem("uniqueId", deviceID)
+  return deviceID
+}
+
+axios.defaults.headers.common['unique-id'] = getUniqueId()
 
 axios.interceptors.response.use(
   (resp) => resp,
@@ -15,7 +31,7 @@ axios.interceptors.response.use(
 
       try {
         const response = await axios.post(
-          "https://wchandler60610.pythonanywhere.com/api/token/refresh/",
+          url,
           {
             refresh: localStorage.getItem("refresh_token"),
           },

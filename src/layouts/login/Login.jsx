@@ -6,7 +6,7 @@ import logo from "../../assets/img/logo.webp";
 import axios from "axios";
 import { UserContext } from "contexts/UserContext";
 import { useHistory } from "react-router-dom";
-
+import toast, { Toaster } from 'react-hot-toast';
 
 let myDate = new Date();
 let hours = myDate.getHours();
@@ -19,21 +19,30 @@ else if (hours >= 17 && hours <= 24) greet = "Good Evening!";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {login} = useContext(UserContext)
+  const {login, loginError} = useContext(UserContext)
   const history = useHistory();
-
-
+  
+  // const submit = async (e) => {
+  //   e.preventDefault()
+  //   if( await login(email, password)){
+  //       setEmail("");
+  //       setPassword("");
+  //       history.push("/");
+  //   }
+  // };
+  const notify = () => toast(loginError);
   const submit = async (e) => {
-    e.preventDefault()
-
-    if( await login(email, password)){
-        setEmail("");
-        setPassword("");
-        history.push("/");
+    e.preventDefault();
+    const loginSuccess = await login(email, password);
+    if (loginSuccess) {
+      setEmail("");
+      setPassword("");
+      history.push("/");
+    } else {
+      notify(); // Display toast message for login failure
     }
-
-
   };
+  
   return (
     <div className="bg-white dark:bg-gray-900">
       <div className="flex justify-center h-screen">
@@ -85,6 +94,14 @@ function Login() {
               <p className="mt-3 text-gray-500 dark:text-gray-300">
                 {`${greet}`} Sign in to access your dashboard
               </p>
+              <Toaster position="top-center" toastOptions={{
+                className: '',
+                duration: 3000,
+                style: {
+                  background: '#d8412f',
+                  color: '#fff',
+                }
+              }}/>
             </div>
             <div className="mt-8">
               <form onSubmit={submit}>
@@ -129,6 +146,7 @@ function Login() {
                   />
                 </div>
                 <div className="mt-6">
+                  {/* {loginError && <Toaster />} */}
                   <button
                     className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50"
                     type="submit"

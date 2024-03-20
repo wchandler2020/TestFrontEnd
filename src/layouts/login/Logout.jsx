@@ -3,7 +3,8 @@ import axios from "axios";
 // import "../../App.css"
 
 const Logout = () => {
-  const logOutUrl = 'https://wchandler60610.pythonanywhere.com/api/token/logout/'
+  //const logOutUrl = 'https://wchandler60610.pythonanywhere.com/api/token/logout/'
+  const logOutUrl = 'http://localhost:8000/api/token/logout/'
   
   const logoutFunc = async () => {
     try {
