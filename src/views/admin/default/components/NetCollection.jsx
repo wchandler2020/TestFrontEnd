@@ -1,19 +1,17 @@
-import React from "react";
 
+import React from "react";
 // Chakra imports
 import { Box, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card.js";
-import {
-  barChartDataDailyTraffic,
-  barChartOptionsDailyTraffic,
-} from "variables/charts";
-
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
 import PayerMixChart from "components/charts/PayerMixChart"; 
+import MonthlyCostChart from "components/charts/MonthlyCostChart";
+import ClaimVolumesChart from "components/charts/ClaimVolumesChart";
+import NetCollectionChart from "components/charts/NetCollectionChart";
 
-export default function PayerMix(props) {
+export default function NetCollection(props) {
   const { ...rest } = props;
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
@@ -27,7 +25,7 @@ export default function PayerMix(props) {
               color='secondaryGray.600'
               fontSize='md'
               fontWeight='600'>
-              Payor Mix
+              Net Collection     
             </Text>
           </Flex>
           <Flex align='end'>
@@ -53,7 +51,7 @@ export default function PayerMix(props) {
         </Flex>
       </Flex>
       <Box h='240px' mt='auto'>
-        <PayerMixChart chartsData={props.chartData}/>
+       <NetCollectionChart chartData={props.chartData}/>
       </Box>
     </Card>
   );

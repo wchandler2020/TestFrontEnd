@@ -8,14 +8,12 @@ const ArBucketsChart = (props) => {
   const arMeasureNames = Object.values(data['Measure Names'])
   const arMeasureValues = Object.values(data['Measure Values'])
 
-  
   function refactoredNumbers(arr) {
     let roundedArray = []
     for (let i = 0; i < arr.length; i++) {
       const number = parseFloat(arr[i].replace(/,/g, ''));
       const roundedNumber = Math.round(number);
       const finalNum = Math.round(roundedNumber / 1000) * 1000;
-      console.log('it is getting there', finalNum)
       roundedArray.push(finalNum.toLocaleString());
     }
   return roundedArray
@@ -26,12 +24,12 @@ const ArBucketsChart = (props) => {
 
   const series = [
     {
-      name: 'Income',
+      name: '',
       type: 'column',
       data: arMeasureNums_1
     },
     {
-      name: 'Cashflow',
+      name: '',
       type: 'column',
       data: arMeasureNums_2
     }

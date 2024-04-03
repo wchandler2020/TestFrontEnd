@@ -1,29 +1,22 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useContext} from "react";
 
 import { Icon } from "@chakra-ui/react";
 import {
-  MdBarChart,
   MdPerson,
   MdHome,
-  MdLock,
-  MdOutlineShoppingCart,
-  MdLogout,
   MdOutlineGroups
 } from "react-icons/md";
 
 // Admin Imports
 import MainDashboard from "views/admin/default";
-import NFTMarketplace from "views/admin/marketplace";
 import Profile from "views/profile/Profile";
 import DataTables from "views/admin/dataTables";
-import RTL from "views/admin/rtl";
-import Logout from "layouts/login/Logout";
 import AdminLayout from 'layouts/admin';
 import RtlLayout from 'layouts/rtl';
 import Login from 'layouts/login/Login';
-import Mfa from 'layouts/mfa/Mfa';
+import Mfa from 'layouts/mfa';
 import {UserContext } from 'contexts/UserContext';
-import { HashRouter, Route, Switch, RedirectFunction, BrowserRouter as Router, BrowserRouter, Redirect, Navigate} from 'react-router-dom';
+import {  Route, Switch, BrowserRouter, Redirect} from 'react-router-dom';
 
 
 

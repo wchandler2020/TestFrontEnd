@@ -5,7 +5,7 @@ const PayerMixChart = (props) => {
     const data =  props.chartsData;
     const payorMixVal = Object.values(data['Payer Type'])
     const payorMixSeriees = Object.values(data['Payer Percentage'])
-    console.log('series data: ', data)
+    
     const options = {
         chart: {
           type: 'bar',
@@ -39,7 +39,7 @@ const PayerMixChart = (props) => {
     
       const series = [
         {
-          name: 'Sales',
+          name: '',
           data: payorMixSeriees,
         },
       ];
@@ -61,80 +61,42 @@ const PayerMixChart = (props) => {
 export default PayerMixChart;
 
 
-// const PayerMixChart = (props) => {
-//   const [chartData, setChartData] = useState([]);
-//   const [chartOptions, setChartOptions] = useState({});
+// const data = props.chartData;
 
-// //   useEffect(() => {
-// //     setChartData(props.chartData);
-// //     setChartOptions(props.tableData);
-// //   }, [props.chartData, props.tableData]);
-// //   console.log('CHART DATA: ', chartData)
+//   const netCollectionMonths = Object.values(data['Month of Date'])
+//   const netCollectionValues = Object.values(data['Measure Values'])
+//   console.log('MONTHS: ', netCollectionMonths);
+//   console.log('VALS: ', netCollectionValues)
 
-//   let options = {
-//     series: [{
-//     data: [400, 430, 448, 470, 540, 580, 690]
-//   }],
-//     chart: {
-//     type: 'bar',
-//     height: 350
-//   },
-//   annotations: {
-//     xaxis: [{
-//       x: 500,
-//       borderColor: '#00E396',
-//       label: {
-//         borderColor: '#00E396',
-//         style: {
-//           color: '#fff',
-//           background: '#00E396',
-//         },
-//         text: 'X annotation',
-//       }
-//     }],
-//     yaxis: [{
-//       y: 'July',
-//       y2: 'September',
-//       label: {
-//         text: 'Y annotation'
-//       }
-//     }]
-//   },
-//   plotOptions: {
-//     bar: {
-//       horizontal: true,
-//     }
-//   },
-//   dataLabels: {
-//     enabled: true
-//   },
-//   xaxis: {
-//     categories: ['June', 'July', 'August', 'September', 'October', 'November', 'December'],
-//   },
-//   grid: {
-//     xaxis: {
-//       lines: {
-//         show: true
-//       }
-//     }
-//   },
-//   yaxis: {
-//     reversed: false,
-//     axisTicks: {
-//       show: true
-//     }
+//   const combinedStrings = [];
+
+//   for (let i = 0; i < netCollectionMonths.length; i++) {
+//     const month = netCollectionMonths[i];
+//     const percentage = (netCollectionValues[i] * 100).toFixed(1); // Convert to percentage and round to 1 decimal place
+//     combinedStrings.push(`${month} ${percentage}%`);
 //   }
-//   };
 
-//   return (
-//     <Chart
-//       options={options}
-//     //   series={filteredSeries}
-//       type="bar"
-//       width="100%"
-//       height="100%"
-//     />
-//   );
-// };
+//   console.log('COMBINED STRING: ', combinedStrings)
 
-// export default PayerMixChart;
+//   const vals_1 = [];
+//   const vals_2 = []
+//   const vals_3 = []
+//   // Getting the first value
+//   for (let i = 0; i < netCollectionValues.length; i += 3) {
+//     const percentage = (netCollectionValues[i] * 100).toFixed(1);
+//     vals_1.push(percentage); // Getting every third value thereafter
+//   }
+
+//   for (let i = 1; i < netCollectionValues.length; i += 3) {
+//     const percentage = (netCollectionValues[i] * 100).toFixed(1);
+//     vals_2.push(percentage); // Getting every third value thereafter
+//   }
+
+//   for (let i = 2; i < netCollectionValues.length; i += 3) {
+//     const percentage = (netCollectionValues[i] * 100).toFixed(1);
+//     vals_3.push(percentage); // Getting every third value thereafter
+//   }
+
+//   console.log('LIST VALUES 1: ', vals_1);
+//   console.log('LIST VALUES 2: ', vals_2);
+//   console.log('LIST VALUES 3: ', vals_3);

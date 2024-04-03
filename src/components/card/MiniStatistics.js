@@ -31,7 +31,7 @@ export default function Default(props) {
             lineHeight='50%'
             color={textColorSecondary}
             fontSize={{
-              base: "sm",
+              base: "16px",
             }}>
             {name}
           </StatLabel>
@@ -48,7 +48,7 @@ export default function Default(props) {
             lineHeight='50%'
             color={textColorSecondary}
             fontSize={{
-              base: "sm",
+              base: "14px",
             }}>
             {name2}
           </StatLabel>
@@ -65,7 +65,7 @@ export default function Default(props) {
             lineHeight='50%'
             color={textColorSecondary}
             fontSize={{
-              base: "sm",
+              base: "14px",
             }}>
             {name3}
           </StatLabel>

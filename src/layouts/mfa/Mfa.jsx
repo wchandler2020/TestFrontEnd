@@ -16,6 +16,7 @@ else if (hours >= 17 && hours <= 24) greet = "Good Evening!";
 
 function Mfa() {
   const [token, setToken] = useState("");
+  // user context to check if a user is verified, if there is an error or if the data is still loading
   const {isVerified, VerifyUser,  error, loading} = useContext(UserContext)
 
   const submit = async (e) => {
@@ -47,7 +48,7 @@ function Mfa() {
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
             <div>
               <h2 className="text-6xl font-medium text-white">
-                Jorie Healthcare Partners
+                Jorie AI
               </h2>
               <p className="max-w-xl mt-1 text-white text-xl font-light">
                 Next Generation of Medical Automation is Here

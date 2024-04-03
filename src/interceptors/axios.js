@@ -52,6 +52,10 @@ axios.interceptors.response.use(
         }
       } catch (refreshError) {
         console.log("Error refreshing token:", refreshError);
+        localStorage.removeItem("access_token")
+        localStorage.removeItem("refresh_token")
+        window.location.reload()
+
       }
     }
     refresh = false;

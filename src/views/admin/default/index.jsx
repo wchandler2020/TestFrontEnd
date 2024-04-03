@@ -22,54 +22,30 @@
 
 // Chakra imports
 import {
-  Avatar,
   Box,
-  Flex,
-  FormLabel,
   Icon,
-  Select,
   SimpleGrid,
-  keyframes,
   useColorModeValue,
 } from "@chakra-ui/react";
 // Assets
-import Usa from "assets/img/dashboards/usa.png";
-// Custom components
-import MiniCalendar from "components/calendar/MiniCalendar";
+
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
 import React, {useEffect, useState} from "react";
 import {
-  MdAddTask,
-  MdAttachMoney,
-  MdBarChart,
-  MdFileCopy,
   MdArrowUpward,
   MdArrowDownward
 } from "react-icons/md";
-import CheckTable from "views/admin/default/components/CheckTable";
-import ComplexTable from "views/admin/default/components/ComplexTable";
 import ArBuckets from "views/admin/default/components/ArBuckets";
-import PieCard from "views/admin/default/components/PieCard";
-import Tasks from "views/admin/default/components/Tasks";
-import TotalSpent from "views/admin/default/components/TotalSpent";
-import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
-import {
-  columnsDataCheck,
-  columnsDataComplex,
-} from "views/admin/default/variables/columnsData";
-import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
-import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
 import axios from "axios";
 import { formatClientData } from "client_utility";
-import { typeOf } from "react-is";
 import '../../../interceptors/axios'
-import PayerMixChart from "components/charts/PayerMixChart";
 import PayerMix from "./components/PayerMix";
-import MonthlyCost from "./components/MonthlyCost";
+import NetCollection from "./components/NetCollection";
 import ClaimVolumes from "./components/ClaimVolumes";
 import '../../../interceptors/axios'
 import Loading from "../loading/Loading";
+import RevenueOutcome from "./components/RevenueOutcomes";
 
 export default function UserReports() {
   const [loading, setLoading] = useState(true)
@@ -79,9 +55,11 @@ export default function UserReports() {
   const [payerMixData, setPayerMixData] = useState(null);
   const [monthCostData, setMonthlyCostData] = useState(null);
   const [claimVolumeData, setClaimVolumeData] = useState(null);
+  const [netCollectionData, setNetCollectionData] = useState(null);
+  const [revenueOutcomeData, setRevenueOutcomeData] = useState(null);
+  
 const url = "http://localhost:8000/api/tableau-data/";
 // const url = "https://wchandler60610.pythonanywhere.com/api/tableau-data/";
-const values = [];
 
 useEffect(() => {
   const accessToken = localStorage.getItem("access_token");
@@ -96,24 +74,31 @@ useEffect(() => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-                
+        console.log(data)
         const jsonString = JSON.stringify(data.client_data)
         const comparisoonDataStr = JSON.stringify(data.chart_data_results[0])
         const monthCostStr = JSON.stringify(data.chart_data_results[1])
         const payermixStr = JSON.stringify(data.chart_data_results[2])
         const volumeStr = JSON.stringify(data.chart_data_results[3])
+        const netCollectionsStr = JSON.stringify(data.chart_data_results[4])
+        const revenueOutcomeStr = JSON.stringify(data.chart_data_results[5])
         
         const mixPayereResponseData = JSON.parse(payermixStr); 
         const retrievedData = JSON.parse(jsonString);
         const monthCostResponseeData = JSON.parse(monthCostStr);
         const volumeData = JSON.parse(volumeStr);
         const comparisonData = JSON.parse(comparisoonDataStr)
+        const netCollectionJSONData = JSON.parse(netCollectionsStr)
+        const revenueOutcomeJSONData = JSON.parse(revenueOutcomeStr)
         setTableauData(retrievedData);
         setPayerMixData(mixPayereResponseData)
         setMonthlyCostData(monthCostResponseeData)
         setComparisonData(comparisonData)
         setClaimVolumeData(volumeData)
+        setNetCollectionData(netCollectionJSONData)
+        setRevenueOutcomeData(revenueOutcomeJSONData)
         setLoading(false)
+        
       } catch (e) {
         console.log(e);
       }
@@ -121,7 +106,7 @@ useEffect(() => {
   }
 }, []);
 
-
+console.log('NET COLLECTION DATA: ', netCollectionData)
 
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
@@ -129,12 +114,6 @@ useEffect(() => {
   if(loading) return <div style={{'height': '100vh', 'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center'}}>
     <Loading /> 
   </div>
-  // <Icon
-  //                       w='32px'
-  //                       h='32px'
-  //                       as={negVal ? MdArrowDownward : MdArrowUpward}
-  //                       color={negVal ? '#CB0000' : '#5C8F22'}
-  //                     />
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
@@ -167,110 +146,20 @@ useEffect(() => {
             )}
             )
           }      
-        {/* <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg={boxBg}
-              icon={
-                <Icon w='32px' h='32px' as={MdAttachMoney} color={brandColor} />
-              }
-            />
-          }
-          name='Spend this month'
-          value='$642.39'
-        /> */}
-        {/* <MiniStatistics growth='+23%' name='Sales' value='$574.34' /> */}
-        {/* <MiniStatistics
-          endContent={
-            <Flex me='-16px' mt='10px'>
-              <FormLabel htmlFor='balance'>
-                <Avatar src={Usa} />
-              </FormLabel>
-              <Select
-                id='balance'
-                variant='mini'
-                mt='5px'
-                me='0px'
-                defaultValue='usd'>
-                <option value='usd'>USD</option>
-                <option value='eur'>EUR</option>
-                <option value='gba'>GBA</option>
-              </Select>
-            </Flex>
-          }
-          name='Your balance'
-          value='$1,000'
-        /> */}
-        {/* <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'
-              icon={<Icon w='28px' h='28px' as={MdAddTask} color='white' />}
-            />
-          }
-          name='New Tasks'
-          value='154'
-        /> */}
-        {/* <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg={boxBg}
-              icon={
-                <Icon w='32px' h='32px' as={MdFileCopy} color={brandColor} />
-              }
-            />
-          }
-          name='Total Projects'
-          value='2935'
-        /> */}
       </SimpleGrid>
-    
-
       <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'>
         {comparisonData && <ArBuckets chartData={comparisonData}/>}
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
         {/* Conditionally render MonthlyCost component */}
-        
         {claimVolumeData && <ClaimVolumes chartData={claimVolumeData}/>}
         {/* Conditionally render PayerMix component */}
         {payerMixData && <PayerMix chartData={payerMixData} />}
-        {/* <ArBuckets  
-            chartData={comparisonData}
-        /> */}
       </SimpleGrid>
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
         {/* Conditionally render MonthlyCost component */}
-        {/* {monthCostData && <MonthlyCost chartData={monthCostData} />} */}
-        {/* Conditionally render PayerMix component */}
-        {/* {payerMixData && <PayerMix chartData={payerMixData} />} */}
-        {/* <ArBuckets  
-          columnsData={xaxisData}
-          tableData={yaxisData}
-        /> */}
-        {/* <WeeklyRevenue /> */}
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        {/* <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} /> */}
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          {/* <PieCard /> */}
-        </SimpleGrid>
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        {/* <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
-        /> */}
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          {/* <Tasks />
-          <MiniCalendar h='100%' minW='100%' selectRange={false} /> */}
-        </SimpleGrid>
+        {netCollectionData && <NetCollection chartData={netCollectionData}/>}
+        {revenueOutcomeData && <RevenueOutcome chartData={revenueOutcomeData}/>}
       </SimpleGrid>
     </Box>
   );

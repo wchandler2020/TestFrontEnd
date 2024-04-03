@@ -54,7 +54,12 @@ const UserProvider = ( {children}) =>{
       return false
     }
 
- 
+    window.addEventListener('storage', () => {
+      if(!localStorage.getItem("access_token")){
+        setAuth(false)
+        setVerified(false)
+      }
+    })
     const verifyToken = async (token) =>{
       setLoginError(false)
         const accessToken = localStorage.getItem("access_token");
@@ -79,7 +84,8 @@ const UserProvider = ( {children}) =>{
         return false
       }
     const VerifyUser = async (token) => {
-       setVerified(!isVerified? (await verifyToken(token)): true);
+       const is_verified = await verifyToken(token);
+       setVerified(is_verified);
     }
     
     const IsAlreadyVerified = async () =>{

@@ -1,22 +1,19 @@
-import React from "react";
 
+import React from "react";
 // Chakra imports
 import { Box, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card.js";
-import {
-  barChartDataDailyTraffic,
-  barChartOptionsDailyTraffic,
-} from "variables/charts";
-
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
-import PayerMixChart from "components/charts/PayerMixChart"; 
 
-export default function PayerMix(props) {
+import RevenueOutcomeChart from "components/charts/RevenueOutcomeChart";
+
+export default function RevenueOutcome(props) {
   const { ...rest } = props;
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
+  console.log('chartdata1: re', props.chartData)
   return (
     <Card align='center' direction='column' w='100%' {...rest}>
       <Flex justify='space-between' align='start' px='10px' pt='5px'>
@@ -27,7 +24,7 @@ export default function PayerMix(props) {
               color='secondaryGray.600'
               fontSize='md'
               fontWeight='600'>
-              Payor Mix
+              Revenue Outcomes      
             </Text>
           </Flex>
           <Flex align='end'>
@@ -53,7 +50,7 @@ export default function PayerMix(props) {
         </Flex>
       </Flex>
       <Box h='240px' mt='auto'>
-        <PayerMixChart chartsData={props.chartData}/>
+       <RevenueOutcomeChart chartData={props.chartData}/>
       </Box>
     </Card>
   );
