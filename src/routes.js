@@ -20,6 +20,7 @@ import {  Route, Switch, BrowserRouter, Redirect} from 'react-router-dom';
 
 
 
+
 const routes = [
   {
     name: "Client Dashboard",
@@ -32,7 +33,7 @@ const routes = [
     name: "Meet The Team",
     layout: "/admin",
     icon: <Icon as={MdOutlineGroups} width='20px' height='20px' color='inherit' />,
-    path: "/data-tables",
+    path: "/our-team",
     component: DataTables,
   },
   {

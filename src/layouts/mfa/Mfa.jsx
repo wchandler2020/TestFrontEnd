@@ -10,7 +10,7 @@ let myDate = new Date();
 let hours = myDate.getHours();
 let greet;
 
-if (hours < 12) greet = "Morning";
+if (hours < 12) greet = "Good Morning";
 else if (hours >= 12 && hours <= 17) greet = "Good Afternoon!";
 else if (hours >= 17 && hours <= 24) greet = "Good Evening!";
 
@@ -59,16 +59,16 @@ function Mfa() {
         <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
           <div className="flex-1">
             <div className="text-center">
-              <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center">
                 <img
                   src={logo}
                   alt=""
-                  width="120px"
-                  height="120px"
+                  width="60px"
+                  height="60px"
                   className="p-0 m-0"
                 />
-                <h2 className="text-4xl font-bold text-center text-blue-500 dark:text-white"> 
-                    Jorie 
+                <h2 className="text-4xl font-bold text-center text-blue-500 dark:text-white ml-2"> 
+                    Jorie AI
                 </h2>
               </div>
 

@@ -2,7 +2,7 @@
 
 import React, { useState, useContext} from "react";
 import modal_login_bg_image from "../../assets/img/jorie_ai.png";
-import logo from "../../assets/img/logo.webp";
+import logo from "../../assets/img/logo.png";
 import axios from "axios";
 import { UserContext } from "contexts/UserContext";
 import { useHistory } from "react-router-dom";
@@ -21,15 +21,6 @@ function Login() {
   const [password, setPassword] = useState("");
   const {login, loginError} = useContext(UserContext)
   const history = useHistory();
-  
-  // const submit = async (e) => {
-  //   e.preventDefault()
-  //   if( await login(email, password)){
-  //       setEmail("");
-  //       setPassword("");
-  //       history.push("/");
-  //   }
-  // };
   const notify = () => toast(loginError);
   const submit = async (e) => {
     e.preventDefault();
@@ -82,12 +73,12 @@ function Login() {
                 <img
                   src={logo}
                   alt=""
-                  width="120px"
-                  height="120px"
+                  width="60px"
+                  height="60px"
                   className="p-0 m-0"
                 />
-                <h2 className="text-4xl font-bold text-center text-blue-500 dark:text-white"> 
-                    Jorie 
+                <h2 className="text-4xl font-bold text-center text-blue-500 dark:text-white ml-2"> 
+                    Jorie AI
                 </h2>
               </div>
 

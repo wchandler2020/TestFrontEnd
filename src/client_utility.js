@@ -1,6 +1,3 @@
-import { char } from "stylis";
-import Conversion from "views/admin/default/components/PieCard";
-
 export const formatClientData = (data_list) => {
     const data_keys = Object.keys(data_list)
     const data_values = Object.values(data_list)
@@ -18,7 +15,6 @@ export const formatClientData = (data_list) => {
     }
     else if(String(data_keys[1]).includes('Net Revenue Current/Previous Month Pos/Neg Flag')){
         const result = data_values[2]["0"]
-        
         return ['Monthly Net Revenue', result]
     }
     else if(String(data_keys[1]).includes('CCR Current/Previous Month Pos/Neg Flag')){  
@@ -79,6 +75,7 @@ export const formatClientData = (data_list) => {
     }
     else if(String(data_keys[0]).includes('Baseline Tooltip')){
         const result = data_values[2]["0"]
+        console.log('RESULT', result)
         return ['Baseline:  ', result]
     }
     else if(String(data_keys[1]).includes('Date Tooltip')){

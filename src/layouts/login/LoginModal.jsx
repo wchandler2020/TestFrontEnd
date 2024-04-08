@@ -68,49 +68,7 @@ const LoginModal = (props) => {
               className="w-full h-full object-cover modal-img leftside_img"
             />
           </div>
-          {/* bg-[#4cb5f5] */}
           <div className="w-1/2 h-full bg-white  flex flex-col form-container">
-            {/* <div className="w-full flex flex-col max-w-[450px]">
-              <div className="w-full flex flex-col">
-                <h3 className="text-2xl font-semibold">Jorie Client Portal</h3>
-                <p className="text-sm mb-2">Good {greet}, Please Log In</p>
-              </div>
-
-              <div className="w-full flex flex-col">
-                <form onSubmit={submit}>
-                  <input
-                    type="email"
-                    className="w-full text-black outline-none border-b border-black focus:outline-none py-2 bg-transparent my-4 "
-                    placeholder="Enter Your Email"
-                    name="username"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <input
-                    type="password"
-                    className="w-full text-black  border-b outline-none border-black focus:outline-none py-2 bg-transparent"
-                    placeholder="Enter Your Password"
-                    name="password"
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <div className="w-full flex items-center justify-between">
-                    <div className="w-full flex flex-co my-4">
-                      <button
-                        className="w-full bg-[#060606] text-white rounded-md p-2 text-center flex items-center justify-center"
-                        type="submit"
-                      >
-                        Login
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-
-              <div className="w-full flex items-center justify-center py-2 mt-10 ">
-                <p className="text-sm font-normal  text-[#444444] contact-text ">
-                  Issues with your account? Contact your administrator
-                </p>
-              </div>
-            </div> */}
             <div class="login_alt">
               <form class="login__form" onSubmit={submit}>
                 <h1 class="login__title">Jorie Login Portal</h1>

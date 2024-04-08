@@ -29,6 +29,7 @@ export default function Default(props) {
         <Stat my='auto' ms={startContent ? "18px" : "0px"}>
           <StatLabel
             lineHeight='50%'
+            alignContent="center"
             color={textColorSecondary}
             fontSize={{
               base: "16px",
