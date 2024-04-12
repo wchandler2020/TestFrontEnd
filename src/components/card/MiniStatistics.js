@@ -14,7 +14,7 @@ import Card from "components/card/Card.js";
 import React from "react";
 
 export default function Default(props) {
-  const { startContent, endContent, name, growth, value, name2, value2, name3, value3} = props;
+  const { startContent, endContent, growth, name, value, name2, value2, name3, value3} = props;
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorSecondary = "secondaryGray.600";
   return (

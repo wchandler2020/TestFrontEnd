@@ -49,17 +49,10 @@ import RevenueOutcome from "./components/RevenueOutcomes";
 
 export default function UserReports() {
   const [loading, setLoading] = useState(true)
-  const [tableauData, setTableauData] = useState([]);
-  const [barchartData, setBarchartData] = useState([]);
-  const [comparisonData, setComparisonData] = useState(null);
-  const [payerMixData, setPayerMixData] = useState(null);
-  const [monthCostData, setMonthlyCostData] = useState(null);
-  const [claimVolumeData, setClaimVolumeData] = useState(null);
-  const [netCollectionData, setNetCollectionData] = useState(null);
-  const [revenueOutcomeData, setRevenueOutcomeData] = useState(null);
+  const [tableauData, setTableauData] = useState(null);
+
   
 const url = "http://localhost:8000/api/tableau-data/";
-// const url = "https://wchandler60610.pythonanywhere.com/api/tableau-data/";
 
 useEffect(() => {
   const accessToken = localStorage.getItem("access_token");
@@ -74,31 +67,8 @@ useEffect(() => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        console.log(data)
-        const jsonString = JSON.stringify(data.client_data)
-        const comparisoonDataStr = JSON.stringify(data.chart_data_results[0])
-        const monthCostStr = JSON.stringify(data.chart_data_results[1])
-        const payermixStr = JSON.stringify(data.chart_data_results[2])
-        const volumeStr = JSON.stringify(data.chart_data_results[3])
-        const netCollectionsStr = JSON.stringify(data.chart_data_results[4])
-        const revenueOutcomeStr = JSON.stringify(data.chart_data_results[5])
-        
-        const mixPayereResponseData = JSON.parse(payermixStr); 
-        const retrievedData = JSON.parse(jsonString);
-        const monthCostResponseeData = JSON.parse(monthCostStr);
-        const volumeData = JSON.parse(volumeStr);
-        const comparisonData = JSON.parse(comparisoonDataStr)
-        const netCollectionJSONData = JSON.parse(netCollectionsStr)
-        const revenueOutcomeJSONData = JSON.parse(revenueOutcomeStr)
-        setTableauData(retrievedData);
-        setPayerMixData(mixPayereResponseData)
-        setMonthlyCostData(monthCostResponseeData)
-        setComparisonData(comparisonData)
-        setClaimVolumeData(volumeData)
-        setNetCollectionData(netCollectionJSONData)
-        setRevenueOutcomeData(revenueOutcomeJSONData)
+        setTableauData(data.client_data);
         setLoading(false)
-        
       } catch (e) {
         console.log(e);
       }
@@ -106,7 +76,7 @@ useEffect(() => {
   }
 }, []);
 
-console.log('NET COLLECTION DATA: ', netCollectionData)
+
 
   // Chakra Color Mode
   const brandColor = useColorModeValue("brand.500", "white");
@@ -122,7 +92,19 @@ console.log('NET COLLECTION DATA: ', netCollectionData)
         mb='20px'>
           {
             tableauData.map((tabItem, i) => {
-              const negVal = Object.values(tabItem['item_1'])[1]['0']
+              console.log(tabItem)
+              const tabName = Object.keys(tabItem[0])
+              const tabValue = Object.values(tabItem[0])
+              const dataList = [tabName[1], tabValue[2]['0']]
+              const tabName2 = Object.keys(tabItem[1])
+              const tabValue2 = Object.values(tabItem[1])
+              const dataList2 = [tabName2[0], tabValue2[1]["0"]]
+              const tabName3 = Object.keys(tabItem[2])
+              const tabValue3 = Object.values(tabItem[2])
+              console.log('TIPPY: ', tabValue3)
+              const dataList3 = [tabName3[0], tabValue3[1]["0"]]
+              
+              // const negVal = Object.values(tabItem['item_1'])[1]['0']
               return (
                 <MiniStatistics
                 keys={i}
@@ -131,36 +113,23 @@ console.log('NET COLLECTION DATA: ', netCollectionData)
                     w='56px'
                     h='56px'
                     bg={boxBg}
-                    icon={
-                      <Icon w='32px' h='32px' as={negVal==='Negative' ? MdArrowDownward : MdArrowUpward} color={negVal === 'Negative' ? '#f70025': '#5C8F22'} />
-                    }
+                    // icon={
+                    //   <Icon w='32px' h='32px' as={negVal==='Negative' ? MdArrowDownward : MdArrowUpward} color={negVal === 'Negative' ? '#f70025': '#5C8F22'} />
+                    // }
                   />
                 }
-                name={formatClientData(tabItem['item_1'])[0]}
-                value={formatClientData(tabItem['item_1'])[1]}
-                name2={formatClientData(tabItem['item_2'])[0]}
-                value2={formatClientData(tabItem['item_2'])[1]}
-                name3={formatClientData(tabItem['item_3'])[0]}
-                value3={formatClientData(tabItem['item_3'])[1]}
+                name={formatClientData(dataList)[0]}
+                value={formatClientData(dataList)[1]}
+                name2={formatClientData(dataList2[0])}
+                value2={formatClientData(dataList2[1])}
+                name3={formatClientData(dataList3)[0]}
+                // value3={formatClientData(tabItem['item_3'])[1]}
               />
             )}
             )
           }      
       </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'>
-        {comparisonData && <ArBuckets chartData={comparisonData}/>}
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
-        {/* Conditionally render MonthlyCost component */}
-        {claimVolumeData && <ClaimVolumes chartData={claimVolumeData}/>}
-        {/* Conditionally render PayerMix component */}
-        {payerMixData && <PayerMix chartData={payerMixData} />}
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
-        {/* Conditionally render MonthlyCost component */}
-        {netCollectionData && <NetCollection chartData={netCollectionData}/>}
-        {revenueOutcomeData && <RevenueOutcome chartData={revenueOutcomeData}/>}
-      </SimpleGrid>
+      {/* code goes here */}
     </Box>
   );
 }
