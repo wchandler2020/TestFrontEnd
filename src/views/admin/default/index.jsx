@@ -93,7 +93,7 @@ useEffect(() => {
           {
             tableauData.map((tabItem, i) => {
               console.log(tabItem)
-              const tabName = Object.keys(tabItem[0])
+              const tabName = Object.keys(['item_1'])
               const tabValue = Object.values(tabItem[0])
               const dataList = [tabName[1], tabValue[2]['0']]
               const tabName2 = Object.keys(tabItem[1])
