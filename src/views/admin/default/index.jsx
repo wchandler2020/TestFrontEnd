@@ -38,7 +38,7 @@ import {
 } from "react-icons/md";
 import ArBuckets from "views/admin/default/components/ArBuckets";
 import axios from "axios";
-import { formatClientData } from "client_utility";
+import { formatClientData, formatNumber } from "client_utility";
 import '../../../interceptors/axios'
 import PayerMix from "./components/PayerMix";
 import NetCollection from "./components/NetCollection";
@@ -49,7 +49,8 @@ import RevenueOutcome from "./components/RevenueOutcomes";
 
 export default function UserReports() {
   const [loading, setLoading] = useState(true)
-  const [tableauData, setTableauData] = useState(null);
+  const [tableauData, setTableauData] = useState([]);
+  const [comparisonData, setComparisonData] = useState([])
 
   
 const url = "http://localhost:8000/api/tableau-data/";
@@ -68,6 +69,7 @@ useEffect(() => {
           },
         });
         setTableauData(data.client_data);
+        setComparisonData(data.chart_data_results[0])
         setLoading(false)
       } catch (e) {
         console.log(e);
@@ -90,21 +92,22 @@ useEffect(() => {
         columns={{ base: 1, md: 2, lg: 3, "2xl": 3 }}
         gap='20px'
         mb='20px'>
+        
           {
             tableauData.map((tabItem, i) => {
-              console.log(tabItem)
-              const tabName = Object.keys(['item_1'])
-              const tabValue = Object.values(tabItem[0])
-              const dataList = [tabName[1], tabValue[2]['0']]
-              const tabName2 = Object.keys(tabItem[1])
-              const tabValue2 = Object.values(tabItem[1])
-              const dataList2 = [tabName2[0], tabValue2[1]["0"]]
-              const tabName3 = Object.keys(tabItem[2])
-              const tabValue3 = Object.values(tabItem[2])
-              console.log('TIPPY: ', tabValue3)
-              const dataList3 = [tabName3[0], tabValue3[1]["0"]]
+              const statName1 = Object.keys(tabItem[0])[1];
               
-              // const negVal = Object.values(tabItem['item_1'])[1]['0']
+              const statValue1 = Object.values(tabItem[0])[2]['0'];
+              
+              const statName2 = Object.keys(tabItem[1])[0];
+              const statValue2 = Object.values(tabItem[1])[1]['0'];
+              console.log(statValue2)
+              
+              const statName3 = Object.keys(tabItem[2])[0];
+              const statValue3 = Object.values(tabItem[2])[2]['0'];
+              const intVal = statName1
+              console.log('val: ', intVal)
+              
               return (
                 <MiniStatistics
                 keys={i}
@@ -114,24 +117,41 @@ useEffect(() => {
                     h='56px'
                     bg={boxBg}
                     // icon={
-                    //   <Icon w='32px' h='32px' as={negVal==='Negative' ? MdArrowDownward : MdArrowUpward} color={negVal === 'Negative' ? '#f70025': '#5C8F22'} />
+                    //   // <Icon w='32px' h='32px' as={negVal==='Negative' ? MdArrowDownward : MdArrowUpward} color={negVal === 'Negative' ? '#f70025': '#5C8F22'} />
                     // }
                   />
                 }
-                name={formatClientData(dataList)[0]}
-                value={formatClientData(dataList)[1]}
-                name2={formatClientData(dataList2[0])}
-                value2={formatClientData(dataList2[1])}
-                name3={formatClientData(dataList3)[0]}
-                // value3={formatClientData(tabItem['item_3'])[1]}
+                name={formatClientData(statName1)}
+                value={formatNumber(statValue1)}
+                name2={formatClientData(statName2)}
+                value2={formatNumber(statValue2)}
+                name3={formatClientData(statName3)}
+                value3={formatNumber(statValue3)}
               />
             )}
             )
           }      
       </SimpleGrid>
-      {/* code goes here */}
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'>
+        {comparisonData && <ArBuckets chartData={comparisonData}/>}
+      </SimpleGrid>
+      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
+        {/* Conditionally render MonthlyCost component */}
+        {/* {claimVolumeData && <ClaimVolumes chartData={claimVolumeData}/>} */}
+        {/* Conditionally render PayerMix component */}
+        {/* {payerMixData && <PayerMix chartData={payerMixData} />} */}
+      </SimpleGrid>
+      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
+        {/* Conditionally render MonthlyCost component */}
+        {/* {netCollectionData && <NetCollection chartData={netCollectionData}/>}
+        {revenueOutcomeData && <RevenueOutcome chartData={revenueOutcomeData}/>} */}
+      </SimpleGrid>
+
     </Box>
   );
 }
+
+
+
 
 

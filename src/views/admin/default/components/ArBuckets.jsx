@@ -1,23 +1,15 @@
 import React from "react";
-
 // Chakra imports
 import { Box, Flex, Icon, Text, useColorModeValue } from "@chakra-ui/react";
-import BarChart from "components/charts/BarChart";
-
 // Custom components
 import Card from "components/card/Card.js";
-import {
-  barChartDataDailyTraffic,
-  barChartOptionsDailyTraffic,
-} from "variables/charts";
-
 // Assets
 import { RiArrowUpSFill } from "react-icons/ri";
-import PayerMixChart from "components/charts/PayerMixChart"; 
 import ArBucketsChart from "components/charts/ArBucketsChart";
 
 export default function ArBuckets(props) {
   const { ...rest } = props;
+  console.log('props 1', props.chartData)
   // Chakra Color Mode
   const textColor = useColorModeValue("secondaryGray.900", "white");
   return (
@@ -56,7 +48,7 @@ export default function ArBuckets(props) {
         </Flex>
       </Flex>
       <Box h='240px' mt='auto'>
-        <ArBucketsChart chartData={props.chartData} />
+        {/* <ArBucketsChart chartData={props.chartData} /> */}
       </Box>
     </Card>
   );
